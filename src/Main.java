@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -24,12 +26,15 @@ public class Main {
                 case "1":
                     System.out.println("Digite uma tarefa: ");
                     String titulo = scanner.nextLine().trim();
+                    LocalDateTime criadaEm = (LocalDateTime.now());
+                    DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
                     if (titulo.isEmpty()) {
                         System.out.println("O campo não pode ser vazio");
                     }else{
                         tarefas.add(new Tarefa(titulo));
-                        System.out.println("Tarefa adicionada com sucesso");
+                        System.out.println("Tarefa adicionada com sucesso em " + criadaEm.format(dataFormatada));
+                        System.out.println(titulo);
                     }
                     break;
 
