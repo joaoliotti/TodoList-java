@@ -2,6 +2,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,7 +20,8 @@ public class Main {
             System.out.println("2 - Listar Tarefas");
             System.out.println("3 - Remover uma tarefa");
             System.out.println("4 - Marcar como concluída");
-            System.out.println("4 - Sair");
+            System.out.println("5 - Salvar em um arquivo as tarefas");
+            System.out.println("6 - Sair");
             String opcao = scanner.nextLine();
 
             switch (opcao){
@@ -101,12 +104,31 @@ public class Main {
                     break;
 
                 case "5" :
+                    if (tarefas.isEmpty()) {
+                        System.out.println("Não há tarefas para salvar");
+                        break;
+                    }
+                    try{
+                        FileWriter writer = new FileWriter("tarefas.txt");
+                        for(Tarefa tarefa : tarefas){
+                            String status = tarefa.concluida ? "Concluida" : "Pendente";
+                            writer.write(tarefa.titulo + " - " + status +"\n");
+                        }
+                        System.out.println("Tarefas salvas com sucesso no arquivo tarefas.txt");
+                        writer.close();
+                    }catch (IOException e){
+                        System.out.println("Erro ao salvar arquivo" + e.getMessage());
+                    }
+                    break;
+
+                case "6" :
                     System.out.println("Saindo... Até mais !!! ");
                     scanner.close();
                     return;
 
                 default :
                     System.out.println("Opção Inválida, Tente novamente");
+                    break;
             }
         }
     }
